@@ -1,0 +1,5 @@
+a=float(input())
+perimeter=float(a*4)
+square=float(a**2)
+diagonal=float(round(a*2**0.5,2))
+print(perimeter, square, diagonal)
