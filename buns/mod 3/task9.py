@@ -1,11 +1,11 @@
-N=int(open("input.txt").readline())
-x = 0
-y = 0
+n=int(open("input.txt").readline())
+x=0
+y=0
 length=1
 step=-1
 distance_to_corner=0
 x_y="x"
-for i in range(N):
+for i in range(n):
     if x_y=="x":
         if distance_to_corner==length:
             distance_to_corner=0
