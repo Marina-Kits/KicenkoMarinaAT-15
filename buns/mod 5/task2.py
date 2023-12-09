@@ -1,42 +1,73 @@
 class Node:
     def __init__(self, data):
         self.data=data
-        self.prev=None
-        self.next=None
+        self.nref=None
+        self.pref=None
 
 class Queue:
     def __init__(self):
-        self.head=None
-        self.tail=None
+        self.start=None
+        self.end=None
 
-    def enqueue(self, data):
-        new_node = Node(data)
-        if self.is_empty():
-            self.head=new_node
-            self.tail=new_node
+    def push(self, val):
+        new_val=Node(val)
+        if self.start is None:
+            self.start=new_val
+            self.end=new_val
         else:
-            new_node.next=self.tail
-            self.tail.prev=new_node
-            self.tail=new_node
+            new_val.pref=self.end
+            new_val.nref=None
+            self.end.nref=new_val
+            self.end=new_val
 
-    def dequeue(self):
-        if self.is_empty():
+    def pop(self):
+        if self.start is None:
             return None
         else:
-            dequeued_data=self.head.data
-            if self.head==self.tail:
-                self.head=None
-                self.tail=None
+            val=self.start
+            self.start=self.start.nref
+            if self.start is not None:
+                self.start.pref=None
             else:
-                self.head=self.head.prev
-                self.head.next=None
-            return dequeued_data
+                self.end=None
+            return val.data
 
-    def print_queue(self):
-        if self.is_empty():
-            print("Queue is empty")
+    def insert(self, n, val):
+        new_val=Node(val)
+        if n==0:
+            new_val.nref=self.start
+            self.start.prev=new_val
+            self.start=new_val
         else:
-            current_node=self.tail
-            while current_node:
-                print(current_node.data)
-                current_node=current_node.next
+            current=self.start
+            for i in range(n):
+                if current.nref is None:
+                    print("Position out of range")
+                    return
+                current=current.nref
+            new_val.pref=current.pref
+            new_val.nref=current
+            current.pref.nref=new_val
+            current.pref=new_val
+
+    def print(self):
+        current=self.start
+        while current:
+            separator=' ' if current.nref is not None else '\n'
+            print(current.data, end=separator)
+            current=current.nref
+
+queue=Queue()
+
+queue.push(1)
+queue.push(3)
+queue.push(5)
+queue.push(7)
+queue.push(9)
+queue.print()
+
+print(queue.pop())
+queue.print()
+
+queue.insert(3,1)
+queue.print()

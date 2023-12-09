@@ -1,40 +1,40 @@
 class Node:
     def __init__(self, data):
         self.data=data
-        self.next=None
+        self.pref=None
 
 class Stack:
     def __init__(self):
         self.end=None
 
-    def push(self, data):
-        new_node=Node(data)
+    def push(self, val):
+        new_node=Node(val)
         if self.end is None:
             self.end=new_node
         else:
-            new_node.next=self.end
+            new_node.pref=self.end
             self.end=new_node
 
     def pop(self):
         if self.end is None:
             return None
-        popped_data = self.end.data
-        self.end = self.end.next
-        return popped_data
+        popped_val = self.end.data
+        self.end = self.end.pref
+        return popped_val
 
-    def print_stack(self):
+    def print(self):
         current=self.end
         while current:
-            element_sep=' ' if current.next is not None else '\n'
+            element_sep=' ' if current.pref is not None else '\n'
             print(current.data, end=element_sep)
-            current=current.next
+            current=current.pref
 
 stack=Stack()
 
 stack.push(8)
 stack.push(4)
 stack.push(1)
-stack.print_stack()
+stack.print()
 
 print(stack.pop())
-stack.print_stack()
+stack.print()
